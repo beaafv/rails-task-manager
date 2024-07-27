@@ -1,8 +1,26 @@
-<h1>hello </h1>
-<ul>
-    <% @tasks.each do |task| %>
-    <li><%= link_to task.title, task_path(task) %></li>
-  <% end %>
-</ul>
+<div class="vh-100 bg-white">
+  <%= render 'shared/navbar' %>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h1 class="text-center m-4">Task List</h1>
 
-<%= link_to 'add a new Task', tasks_new_path %>
+        <ul>
+        <% if @tasks.length > 0 %>
+          <% @tasks.each do |task| %>
+            <li class="list-group-item mb-2">
+              <%= link_to task.title, task_path(task) %>
+                <% if task.completed %>
+                  <i class="fa-solid fa-check"></i>
+                <% end %>
+            </li>
+          <% end %>
+          <% else %>
+            <p>You don't have any tasks!</p>
+          <% end %>
+        </ul>
+        <div class="text-center mt-3">
+          <%= link_to 'Add a New Task', tasks_new_path, class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+</div>

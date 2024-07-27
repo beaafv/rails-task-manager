@@ -1,12 +1,27 @@
-<h1> New task </h1>
+<div class="d-flex flex-column">
 
-<%= form_with model: @task do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title %>
-  <%= f.label :details %>
-  <%= f.text_field :details %>
-  <%= f.submit %>
-<% end %>
+  <%= render 'shared/navbar' %>
 
+    <h1 class="m-4"> New task </h1>
 
-<%= link_to 'back to list of tasks', tasks_path %>
+    <div class="vw-100 justify-content-center">
+
+      <%= form_with model: @task do |f| %>
+
+        <div class="form-group mb-2">
+          <%= f.label :title %><br/>
+          <%= f.text_field :title, autofocus: true, autocomplete: "Title of the task" %>
+
+        </div>
+
+        <div class="form-group mb-2">
+          <%= f.label :details %><br />
+          <%= f.text_field :details, autofocus: true, autocomplete: "Description of the task" %>
+
+        </div>
+        <div class="actions mb-2">
+          <%= f.submit "Submit Task", class: 'btn btn-primary btn-small' %>
+        </div>
+      <% end %>
+    </div>
+</div>

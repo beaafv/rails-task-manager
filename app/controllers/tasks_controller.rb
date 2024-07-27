@@ -1,13 +1,13 @@
 class TasksController < ApplicationController
-  before_action :set_tasks, only: [:show, :edit, :update, :destroy]
+  before_action :set_tasks, only: [:show, :edit, :update, :destroy, :task_completed]
 
 
   def index
-    @tasks = Task.all
+    @tasks = Task.where(user: current_user)
   end
 
   def show
-    # @task = Task.find(params[:id])
+    @task = Task.find(params[:id])
   end
 
   def new
@@ -16,7 +16,16 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(tasks_params)
-    @task.save # Will raise ActiveModel::ForbiddenAttributesError
+    @task.user = current_user
+
+
+
+    if @task.save!
+      redirect_to tasks_path, notice: "Task was successfully created."
+    else
+      render :new, status: :unprocessable_entity
+
+    end
   end
 
   def edit
@@ -24,8 +33,21 @@ class TasksController < ApplicationController
   end
 
   def update
-    # @task = Task.find(params[:id])
-    @task.update(params[:task])
+    if @task.update(tasks_params)
+      redirect_to task_path(@task), notice: "Task was successfully updated."
+    else
+      render :edit
+    end
+  end
+
+
+  def task_completed
+    @task.completed = !@task.completed
+    if @task.save
+      redirect_to tasks_path, notice: "Task status updated successfully."
+    else
+      redirect_to task_path(@task), alert: "Unable to update task status."
+    end
   end
 
   def destroy
@@ -35,10 +57,13 @@ class TasksController < ApplicationController
     redirect_to tasks_path, status: :see_other
   end
 
+  private
+
   def set_tasks
     @task = Task.find(params[:id])
   end
-  private
+
+
 
   def tasks_params
     params.require(:task).permit(:title, :details)

@@ -1,8 +1,23 @@
-<h1> hello </h1>
-<%= link_to 'edit', task_edit_path(@task) %>
+  <%= render 'shared/navbar' %>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="text-center mb-3">
+        <h3><%= @task.title %></h3>
+        <p><%= @task.details %></p>
+        <%= link_to "Mark as #{ @task.completed ? 'Not Done' : 'Done' }",
+            task_completed_path(@task),
+            data: {turbo_method: :patch, turbo_confirm: "Are you sure?"},
+            class: "btn btn-success"
+        %>
+        <a href="<%= task_edit_path(@task) %>" class="btn btn-primary mr-2">Edit</a>
+        <%= link_to "Delete",
+          task_path(@task),
+          data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+          class: "btn btn-danger"
+        %>
 
-
-<%= link_to "Delete",
-  task_path(@task),
-  data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
-%>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,3 +13,34 @@
  *= require_tree .
  *= require_self
  */
+
+
+.list-group-item {
+ border-radius: 4px;
+ background-color: #e6e1e1bd;
+ border: none;
+ }
+
+
+ a {
+  text-decoration: none;
+  color:#090909bd
+ }
+
+
+ form {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+ }
+
+
+ input {
+  width: 50vw;
+ }
+
+
+ .btn-small {
+  width: 10vw;
+  margin-top:20px;
+ }
